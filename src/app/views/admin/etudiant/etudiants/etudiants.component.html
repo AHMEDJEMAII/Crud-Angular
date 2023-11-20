@@ -1,0 +1,104 @@
+<div class="mt-5">
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header pb-0">
+              <div class="row">
+                <h3 class="col-9">Liste des etudiants</h3>
+                <a routerLink="Ajouter" class="col-2 btn btn-success"
+                  >Ajouter etudiant
+                </a>
+              </div>
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table
+                  class="table table-vcenter table-mobile-md card-table"
+                  border="1"
+                >
+                  <thead>
+                    <tr>
+                        <th>nomEt</th>
+                        <th>prenomEt</th>
+                      <th>cin</th>
+                      <th>ecole</th>
+                      <th>Date</th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let etudiants of etudiant; let i = index">
+                      <td>{{ etudiants.nomEt }}</td>
+                      <td>{{ etudiants.prenomEt }}</td>
+                      <td>{{ etudiants.cin }}</td>
+                      <td>{{ etudiants.ecole }}</td>
+                      <td>{{ etudiants.dateNaissance }}</td>
+
+                      <ng-template #nullDisplay>
+                        <td>
+                          <a
+                            class="btn btn-warning btn-sm"
+                            style="background-color: rgb(231, 164, 102)"
+                          >
+                            Non affecté
+                          </a>
+                        </td>
+                      </ng-template>
+                      <td class="col">
+                        <a class="btn text-success">
+                          <span class="material-icons"> visibility </span></a
+                        ><a class="btn text-warning">
+                          <span class="material-icons"> edit </span></a
+                        ><a
+                          class="btn text-danger"
+                          (click)="deleteEtudiant(etudiants.idEtudiant)"
+                        >
+                          <span class="material-icons"> delete </span></a
+                        >
+                     
+                          <span class="material-icons"> list </span>
+                        
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- code pour afficher modal de button afficher -->
+  <div class="modal" tabindex="-1" role="dialog" id="blocModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Rechercher un bloc.."
+          />
+          <p>You typed: {{ searchText }}</p>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p>Liste de bloc :</p>
+          <ul>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Fermer
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
