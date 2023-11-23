@@ -1,7 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { Etudiant } from './../Model/Etudiant';
+import { map, catchError } from "rxjs/operators";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 
 @Injectable({
@@ -19,6 +21,8 @@ export class etudiantService {
 
   constructor(private _http: HttpClient) { }
 
+ 
+
   getAllEtudiants(): Observable<Etudiant[]> {
     return this._http.get<Etudiant[]>(this.apiServer + 'getAllEtudiants', this.httpOptions);
   }
@@ -29,4 +33,28 @@ export class etudiantService {
 
   createEmployee(etudiant: Etudiant) {
     return this._http.post<Etudiant>(this.apiServer + 'addEtudiant', etudiant, this.httpOptions);  }
+
+
+    updateEmployee(etudiant: Etudiant) {
+      return this._http.put<Etudiant>(this.apiServer + 'updateEtudiant', etudiant, this.httpOptions);  }
+
+
+
+    
+getEmployeeById(idEtudiant: number): Observable<Etudiant>{
+  return this._http.get<Etudiant>(`${this.baseURL}/${idEtudiant}`);
 }
+
+
+
+
+
+
+ModifierFoyer(etudiant: Etudiant){
+  return this._http.put<Etudiant>(this.apiServer + 'updateEtudiant', etudiant, this.httpOptions);  }
+}
+
+
+
+
+

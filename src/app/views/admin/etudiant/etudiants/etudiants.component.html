@@ -1,4 +1,22 @@
-<div class="mt-5">
+
+<br>
+<br>
+<br> 
+<button class="col-2 btn btn-success" (click)="printSimplePdf()">Download pdf  data </button>  ...
+<a routerLink="Ajouter" class="col-2 btn btn-success"
+>Ajouter etudiant
+
+</a>
+<br>
+<br>
+<br>
+<h1>Recherche multicritère</h1>
+  <div class="search-hero">
+    <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder=" Rechercher etudiant par nom prenom ecole cin ">
+
+
+ 
+  <div class="mt-5">
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-12">
@@ -6,16 +24,16 @@
             <div class="card-header pb-0">
               <div class="row">
                 <h3 class="col-9">Liste des etudiants</h3>
-                <a routerLink="Ajouter" class="col-2 btn btn-success"
-                  >Ajouter etudiant
-                </a>
+                <br>
+             
+                <br>
+               
               </div>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
                 <table
                   class="table table-vcenter table-mobile-md card-table"
-                  border="1"
                 >
                   <thead>
                     <tr>
@@ -28,12 +46,16 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let etudiants of etudiant; let i = index">
-                      <td>{{ etudiants.nomEt }}</td>
-                      <td>{{ etudiants.prenomEt }}</td>
-                      <td>{{ etudiants.cin }}</td>
-                      <td>{{ etudiants.ecole }}</td>
-                      <td>{{ etudiants.dateNaissance }}</td>
+                    <tr *ngFor="let etudiants of etudiant | filter:searchText  | paginate: { itemsPerPage: tableSize, currentPage: page, totalItems: count}; let i = index ">
+                      
+                      <td class="tcell" >{{ etudiants.nomEt }}</td>
+                      <td class="tcell" >{{ etudiants.prenomEt }}</td>
+                      <td class="tcell" >{{ etudiants.cin }}</td>
+                      <td class="tcell" >{{ etudiants.ecole }}</td>
+                      <td class="tcell" >{{ etudiants.dateNaissance }}</td>
+
+
+                     
 
                       <ng-template #nullDisplay>
                         <td>
@@ -46,18 +68,25 @@
                         </td>
                       </ng-template>
                       <td class="col">
-                        <a class="btn text-success">
-                          <span class="material-icons"> visibility </span></a
-                        ><a class="btn text-warning">
+                        <a class="btn text-success"  [routerLink]="['detail', etudiants.idEtudiant,etudiants.nomEt , etudiants.prenomEt , etudiants.cin , etudiants.ecole , etudiants.dateNaissance ]">
+                          <span class="material-icons"> visibility </span></a>
+                        
+                        
+                        <a class="btn text-warning" [routerLink]="['Update', etudiants.idEtudiant,etudiants.nomEt , etudiants.prenomEt , etudiants.cin , etudiants.ecole , etudiants.dateNaissance ]">
                           <span class="material-icons"> edit </span></a
-                        ><a
+                        >
+                        
+                        
+                        
+                        <a
                           class="btn text-danger"
                           (click)="deleteEtudiant(etudiants.idEtudiant)"
                         >
                           <span class="material-icons"> delete </span></a
                         >
-                     
-                          <span class="material-icons"> list </span>
+
+
+                       
                         
                       </td>
                     </tr>
@@ -98,7 +127,24 @@
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             Fermer
           </button>
+
+
+          
+        
         </div>
       </div>
+      
     </div>
+    
   </div>
+  <div>
+    <pagination-controls
+    previousLabel="Prev"
+    nextLabel="Next"
+    (pageChange)="onTableDataChange($event)"></pagination-controls>
+    </div>
+    
+  
+
+  
+

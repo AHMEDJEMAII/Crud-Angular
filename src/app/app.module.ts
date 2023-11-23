@@ -9,12 +9,15 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
 
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   declarations: [
-    AppComponent
     
+    AppComponent
+
 
   ],
   imports: [
@@ -23,7 +26,8 @@ import { FormsModule } from '@angular/forms';
     LayoutsModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule, 
+    PdfViewerModule
 
 
   ],
