@@ -5,6 +5,8 @@ import { Etudiant } from './../../../../Model/Etudiant';
 import { Inject, Input} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog"
 import {FormsModule} from "@angular/forms";
+import Swal from 'sweetalert2';
+import { HttpErrorResponse } from '@angular/common/http';
 ;
 
 @Component({
@@ -53,16 +55,19 @@ export class UpdateEtudiantComponent implements OnInit {
   ModifierFoyer() {
     console.log(this.etudiant)
     this.etudiantService.ModifierFoyer(this.etudiant).subscribe(
-      (res: Etudiant) => {
-        localStorage.clear();
+      () => {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Etudiant modifier avec succées',
+          showConfirmButton: false,
+          timer: 1500
+        });
         this.router.navigate(['admin/etudiant']);
-        console.log('etudiant Modifier Avec succées:', res);
-        
-        // Handle success, update UI, or show a success message to the user
       },
-      (error) => {
-        console.error('Error modifier foyer :', error);
-        // Handle error, show an error message to the user
+      (error: HttpErrorResponse) => {
+        console.error('Error adding etudiant:', error);
       }
     );
-    }}
+}
+}

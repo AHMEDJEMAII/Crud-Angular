@@ -1,16 +1,29 @@
+<br>
+<br>
+<br>
 
-<br>
-<br>
-<br> 
+
+
+
 <button class="col-2 btn btn-success" (click)="printSimplePdf()">Download pdf  data </button>  ...
 <a routerLink="Ajouter" class="col-2 btn btn-success"
 >Ajouter etudiant
 
-</a>
+
+</a> ---
+
+<div class="position-absolute top-0 end-0 p-3">
+  <button class="btn" routerLink="/login" style="background-color: rgb(246, 8, 135); color: white; border-radius: 350px;">
+    <img src="https://creazilla-store.fra1.digitaloceanspaces.com/icons/7912642/avatar-icon-md.png" alt="Image utilisateur" class="user-image" style="width: 20px; height: 20px;">
+    Logout
+  </button>
+</div>
+
+
 <br>
 <br>
 <br>
-<h1>Recherche multicritère</h1>
+<h1 style="font-size: 2.5rem; margin-top: 1.5rem; margin-bottom: 1.5rem;">Recherche multicritère</h1>
   <div class="search-hero">
     <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder=" Rechercher etudiant par nom prenom ecole cin ">
 
@@ -48,11 +61,11 @@
                   <tbody>
                     <tr *ngFor="let etudiants of etudiant | filter:searchText  | paginate: { itemsPerPage: tableSize, currentPage: page, totalItems: count}; let i = index ">
                       
-                      <td class="tcell" >{{ etudiants.nomEt }}</td>
-                      <td class="tcell" >{{ etudiants.prenomEt }}</td>
-                      <td class="tcell" >{{ etudiants.cin }}</td>
-                      <td class="tcell" >{{ etudiants.ecole }}</td>
-                      <td class="tcell" >{{ etudiants.dateNaissance }}</td>
+                      <td  >{{ etudiants.nomEt }}</td>
+                      <td  >{{ etudiants.prenomEt }}</td>
+                      <td >{{ etudiants.cin }}</td>
+                      <td  >{{ etudiants.ecole }}</td>
+                      <td  >{{ etudiants.dateNaissance }}</td>
 
 
                      
@@ -68,22 +81,43 @@
                         </td>
                       </ng-template>
                       <td class="col">
-                        <a class="btn text-success"  [routerLink]="['detail', etudiants.idEtudiant,etudiants.nomEt , etudiants.prenomEt , etudiants.cin , etudiants.ecole , etudiants.dateNaissance ]">
-                          <span class="material-icons"> visibility </span></a>
-                        
-                        
-                        <a class="btn text-warning" [routerLink]="['Update', etudiants.idEtudiant,etudiants.nomEt , etudiants.prenomEt , etudiants.cin , etudiants.ecole , etudiants.dateNaissance ]">
-                          <span class="material-icons"> edit </span></a
-                        >
-                        
-                        
-                        
-                        <a
-                          class="btn text-danger"
-                          (click)="deleteEtudiant(etudiants.idEtudiant)"
-                        >
-                          <span class="material-icons"> delete </span></a
-                        >
+                      <div class="d-flex">
+                      <p>
+                    
+                      </p>
+                      <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                        </div>
+                      </div>
+
+
+                      
+                      <a class="btn btn-success rounded-circle mr-2"
+                      (click)="openBlocShowForm(etudiants)"
+                      style="text-decoration: none; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; font-size: 18px;">
+                     <span class="material-icons">visibility</span>
+                   </a>
+                   
+                      
+
+  <a
+    class="btn btn-warning rounded-circle mr-2"
+    [routerLink]="['Update', etudiants.idEtudiant, etudiants.nomEt, etudiants.prenomEt, etudiants.cin, etudiants.ecole, etudiants.dateNaissance]"
+    style="text-decoration: none; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; font-size: 18px;"
+  >
+    <span class="material-icons">edit</span>
+  </a>
+
+  <a
+    class="btn btn-danger rounded-circle"
+    (click)="deleteEtudiant(etudiants.idEtudiant)"
+    style="text-decoration: none; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; font-size: 18px;"
+  >
+    <span class="material-icons">delete</span>
+  </a>
+</div>
+
 
 
                        

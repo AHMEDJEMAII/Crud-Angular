@@ -38,8 +38,9 @@
   
     <div class="form-group">
       <label for="cin">CIN:</label>
-      <input type="text" class="form-control" id="cin" name="cin" [(ngModel)]="etudiant.cin" required>
-    </div>
+      <input type="text" class="form-control" id="cin" name="cin" [(ngModel)]="etudiant.cin" required pattern="[0-9]{8}">
+     
+      </div>
   
     <div class="form-group">
       <label for="ecole">École:</label>

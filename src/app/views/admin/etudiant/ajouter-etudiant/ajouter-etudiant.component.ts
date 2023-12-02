@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Etudiant } from './../../../../Model/Etudiant';
 import { etudiantService } from './../../../../service/etudiant.service';
-import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-ajouter-etudiant',
@@ -24,17 +27,30 @@ export class AjouterEtudiantComponent implements OnInit {
 
 
 
-  constructor(private etudiantService: etudiantService) { }
+  constructor(private etudiantService: etudiantService ,  private router: Router) { }
 
   ngOnInit(): void {
   }
 
   saveEtudiant() {
-    this.etudiantService.createEmployee(this.etudiant).subscribe(data => {
-      console.log(data);
-
-    });
-  }
+ 
+    this.etudiantService.createEmployee(this.etudiant).subscribe(
+        () => {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Etudiant ajouter avec succées',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          this.router.navigate(['admin/etudiant']);
+        },
+        (error: HttpErrorResponse) => {
+          console.error('Error adding etudiant:', error);
+        }
+      );
+}
+  
 
   getAllEtudiants() {
     // Implémentez la logique pour récupérer tous les étudiants

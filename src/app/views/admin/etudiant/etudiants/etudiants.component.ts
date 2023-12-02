@@ -11,8 +11,14 @@ import 'jspdf-autotable';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 
+import { MatDialog } from '@angular/material/dialog';
 
 import { NgxPaginationModule } from 'ngx-pagination'; 
+
+import Swal from 'sweetalert2'; 
+import { DetailComponent } from '../detail/detail.component';
+import { DetailEtudiantComponent } from '../detail/detail-etudiant/detail-etudiant.component';
+
 
 
 
@@ -31,7 +37,7 @@ export class EtudiantComponent implements OnInit  {
 POSTS: any;
 page: number = 1;
 count: number = 0;
-tableSize: number = 10;
+tableSize: number = 5 ;
 tableSizes: any = [5, 10, 15, 20];
 
 
@@ -43,10 +49,23 @@ tableSizes: any = [5, 10, 15, 20];
 
 
 
-  constructor( private ServiceEtudiant:etudiantService ) { }
+  constructor( private ServiceEtudiant:etudiantService,private dialog:MatDialog ) { }
 
 
-  
+  openBlocShowForm(etudiant:Etudiant): void {
+    const dialogRef = this.dialog.open(DetailEtudiantComponent, {
+      width: '60%',
+      height: '70%',
+      data : {
+        etudiant: etudiant
+      }
+    });
+    /*dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        dialogRef.close();
+      }
+    })*/
+  }
 
   postList(): void {
     this.ServiceEtudiant.getAllEtudiants().subscribe((response) => {
@@ -125,13 +144,31 @@ tableSizes: any = [5, 10, 15, 20];
   //pour supprimer une foyer
 
   //pour supprimer une foyer
-  deleteEtudiant(id){
-    if (confirm("Voulez vous vraiment supprimer ce foyer ?")) {
-      this.ServiceEtudiant.deleteEtudiants(id).subscribe(() => {
-        alert('Suppression effectuée avec succés');
-        window.location.reload();
-        });
-
+    //pour supprimer une foyer
+    deleteEtudiant(id): void {
+      Swal.fire({
+        title: 'Es-tu sûr?',
+        text: 'Vous ne pourrez pas revenir en arrière !',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Oui, supprimez-le !',
+        cancelButtonText: 'Annuler' 
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.ServiceEtudiant.deleteEtudiants(id).subscribe(() => {
+            Swal.fire({
+              title: 'Supprimé!',
+              text: 'Votre fichier a été supprimé.',
+              icon: 'success'
+            }).then(() => {
+              window.location.reload();
+            });
+          });
+        }
+      });
+    }
      
 
 
@@ -149,8 +186,4 @@ tableSizes: any = [5, 10, 15, 20];
 
 
 
-  }
-
   
- 
-}
